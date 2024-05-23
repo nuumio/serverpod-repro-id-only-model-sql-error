@@ -1,0 +1,4 @@
+# Has only id column in DB
+class: IdOnly
+table: id_only
+fields: {}

@@ -31,4 +31,14 @@ void run(List<String> args) async {
 
   // Start the server.
   await pod.start();
+
+  // Run bug reproduction
+  await _bugRepro(pod);
+}
+
+Future<void> _bugRepro(Serverpod pod) async {
+  final session = await pod.createSession();
+  // The following line causes the error
+  IdOnly.db.insertRow(session, IdOnly());
+  await session.close();
 }

@@ -3,6 +3,40 @@
     {
       "type": "createTable",
       "createTable": {
+        "name": "id_only",
+        "dartName": "IdOnly",
+        "module": "id_only_model_sql_error",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('id_only_id_seq'::regclass)",
+            "dartType": "int?"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": [
+          {
+            "indexName": "id_only_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "createTable",
+      "createTable": {
         "name": "serverpod_auth_key",
         "dartName": "AuthKey",
         "module": "serverpod",
