@@ -1,0 +1,3 @@
+type: server
+
+client_package_path: ../id_only_model_sql_error_client

@@ -1,0 +1,11 @@
+{
+  "moduleName": "id_only_model_sql_error",
+  "tables": [],
+  "installedModules": [
+    {
+      "module": "serverpod",
+      "version": "20240115074235544"
+    }
+  ],
+  "migrationApiVersion": 1
+}
