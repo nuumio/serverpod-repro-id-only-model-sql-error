@@ -10,41 +10,63 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class IdOnly extends _i1.TableRow {
-  IdOnly._({int? id}) : super(id);
+abstract class Item extends _i1.TableRow {
+  Item._({
+    int? id,
+    required this.name,
+  }) : super(id);
 
-  factory IdOnly({int? id}) = _IdOnlyImpl;
+  factory Item({
+    int? id,
+    required String name,
+  }) = _ItemImpl;
 
-  factory IdOnly.fromJson(
+  factory Item.fromJson(
     Map<String, dynamic> jsonSerialization,
     _i1.SerializationManager serializationManager,
   ) {
-    return IdOnly(
-        id: serializationManager.deserialize<int?>(jsonSerialization['id']));
+    return Item(
+      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      name: serializationManager.deserialize<String>(jsonSerialization['name']),
+    );
   }
 
-  static final t = IdOnlyTable();
+  static final t = ItemTable();
 
-  static const db = IdOnlyRepository._();
+  static const db = ItemRepository._();
+
+  String name;
 
   @override
   _i1.Table get table => t;
 
-  IdOnly copyWith({int? id});
+  Item copyWith({
+    int? id,
+    String? name,
+  });
   @override
   Map<String, dynamic> toJson() {
-    return {if (id != null) 'id': id};
+    return {
+      if (id != null) 'id': id,
+      'name': name,
+    };
   }
 
   @override
   @Deprecated('Will be removed in 2.0.0')
   Map<String, dynamic> toJsonForDatabase() {
-    return {'id': id};
+    return {
+      'id': id,
+      'name': name,
+    };
   }
 
   @override
   Map<String, dynamic> allToJson() {
-    return {if (id != null) 'id': id};
+    return {
+      if (id != null) 'id': id,
+      'name': name,
+    };
   }
 
   @override
@@ -57,15 +79,18 @@ abstract class IdOnly extends _i1.TableRow {
       case 'id':
         id = value;
         return;
+      case 'name':
+        name = value;
+        return;
       default:
         throw UnimplementedError();
     }
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.find instead.')
-  static Future<List<IdOnly>> find(
+  static Future<List<Item>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? limit,
     int? offset,
     _i1.Column? orderBy,
@@ -74,8 +99,8 @@ abstract class IdOnly extends _i1.TableRow {
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<IdOnly>(
-      where: where != null ? where(IdOnly.t) : null,
+    return session.db.find<Item>(
+      where: where != null ? where(Item.t) : null,
       limit: limit,
       offset: offset,
       orderBy: orderBy,
@@ -87,17 +112,17 @@ abstract class IdOnly extends _i1.TableRow {
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findRow instead.')
-  static Future<IdOnly?> findSingleRow(
+  static Future<Item?> findSingleRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? offset,
     _i1.Column? orderBy,
     bool orderDescending = false,
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findSingleRow<IdOnly>(
-      where: where != null ? where(IdOnly.t) : null,
+    return session.db.findSingleRow<Item>(
+      where: where != null ? where(Item.t) : null,
       offset: offset,
       orderBy: orderBy,
       orderDescending: orderDescending,
@@ -107,21 +132,21 @@ abstract class IdOnly extends _i1.TableRow {
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.findById instead.')
-  static Future<IdOnly?> findById(
+  static Future<Item?> findById(
     _i1.Session session,
     int id,
   ) async {
-    return session.db.findById<IdOnly>(id);
+    return session.db.findById<Item>(id);
   }
 
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteWhere instead.')
   static Future<int> delete(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<IdOnlyTable> where,
+    required _i1.WhereExpressionBuilder<ItemTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<IdOnly>(
-      where: where(IdOnly.t),
+    return session.db.delete<Item>(
+      where: where(Item.t),
       transaction: transaction,
     );
   }
@@ -129,7 +154,7 @@ abstract class IdOnly extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.deleteRow instead.')
   static Future<bool> deleteRow(
     _i1.Session session,
-    IdOnly row, {
+    Item row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow(
@@ -141,7 +166,7 @@ abstract class IdOnly extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.update instead.')
   static Future<bool> update(
     _i1.Session session,
-    IdOnly row, {
+    Item row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.update(
@@ -154,7 +179,7 @@ abstract class IdOnly extends _i1.TableRow {
       'Will be removed in 2.0.0. Use: db.insert instead. Important note: In db.insert, the object you pass in is no longer modified, instead a new copy with the added row is returned which contains the inserted id.')
   static Future<void> insert(
     _i1.Session session,
-    IdOnly row, {
+    Item row, {
     _i1.Transaction? transaction,
   }) async {
     return session.db.insert(
@@ -166,39 +191,39 @@ abstract class IdOnly extends _i1.TableRow {
   @Deprecated('Will be removed in 2.0.0. Use: db.count instead.')
   static Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? limit,
     bool useCache = true,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<IdOnly>(
-      where: where != null ? where(IdOnly.t) : null,
+    return session.db.count<Item>(
+      where: where != null ? where(Item.t) : null,
       limit: limit,
       useCache: useCache,
       transaction: transaction,
     );
   }
 
-  static IdOnlyInclude include() {
-    return IdOnlyInclude._();
+  static ItemInclude include() {
+    return ItemInclude._();
   }
 
-  static IdOnlyIncludeList includeList({
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+  static ItemIncludeList includeList({
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<IdOnlyTable>? orderBy,
+    _i1.OrderByBuilder<ItemTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<IdOnlyTable>? orderByList,
-    IdOnlyInclude? include,
+    _i1.OrderByListBuilder<ItemTable>? orderByList,
+    ItemInclude? include,
   }) {
-    return IdOnlyIncludeList._(
+    return ItemIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(IdOnly.t),
+      orderBy: orderBy?.call(Item.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(IdOnly.t),
+      orderByList: orderByList?.call(Item.t),
       include: include,
     );
   }
@@ -206,38 +231,60 @@ abstract class IdOnly extends _i1.TableRow {
 
 class _Undefined {}
 
-class _IdOnlyImpl extends IdOnly {
-  _IdOnlyImpl({int? id}) : super._(id: id);
+class _ItemImpl extends Item {
+  _ItemImpl({
+    int? id,
+    required String name,
+  }) : super._(
+          id: id,
+          name: name,
+        );
 
   @override
-  IdOnly copyWith({Object? id = _Undefined}) {
-    return IdOnly(id: id is int? ? id : this.id);
+  Item copyWith({
+    Object? id = _Undefined,
+    String? name,
+  }) {
+    return Item(
+      id: id is int? ? id : this.id,
+      name: name ?? this.name,
+    );
   }
 }
 
-class IdOnlyTable extends _i1.Table {
-  IdOnlyTable({super.tableRelation}) : super(tableName: 'id_only') {}
+class ItemTable extends _i1.Table {
+  ItemTable({super.tableRelation}) : super(tableName: 'item') {
+    name = _i1.ColumnString(
+      'name',
+      this,
+    );
+  }
+
+  late final _i1.ColumnString name;
 
   @override
-  List<_i1.Column> get columns => [id];
+  List<_i1.Column> get columns => [
+        id,
+        name,
+      ];
 }
 
-@Deprecated('Use IdOnlyTable.t instead.')
-IdOnlyTable tIdOnly = IdOnlyTable();
+@Deprecated('Use ItemTable.t instead.')
+ItemTable tItem = ItemTable();
 
-class IdOnlyInclude extends _i1.IncludeObject {
-  IdOnlyInclude._();
+class ItemInclude extends _i1.IncludeObject {
+  ItemInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => IdOnly.t;
+  _i1.Table get table => Item.t;
 }
 
-class IdOnlyIncludeList extends _i1.IncludeList {
-  IdOnlyIncludeList._({
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+class ItemIncludeList extends _i1.IncludeList {
+  ItemIncludeList._({
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -245,33 +292,33 @@ class IdOnlyIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(IdOnly.t);
+    super.where = where?.call(Item.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => IdOnly.t;
+  _i1.Table get table => Item.t;
 }
 
-class IdOnlyRepository {
-  const IdOnlyRepository._();
+class ItemRepository {
+  const ItemRepository._();
 
-  Future<List<IdOnly>> find(
+  Future<List<Item>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<IdOnlyTable>? orderBy,
+    _i1.OrderByBuilder<ItemTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<IdOnlyTable>? orderByList,
+    _i1.OrderByListBuilder<ItemTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.find<IdOnly>(
-      where: where?.call(IdOnly.t),
-      orderBy: orderBy?.call(IdOnly.t),
-      orderByList: orderByList?.call(IdOnly.t),
+    return session.dbNext.find<Item>(
+      where: where?.call(Item.t),
+      orderBy: orderBy?.call(Item.t),
+      orderByList: orderByList?.call(Item.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -279,90 +326,90 @@ class IdOnlyRepository {
     );
   }
 
-  Future<IdOnly?> findFirstRow(
+  Future<Item?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? offset,
-    _i1.OrderByBuilder<IdOnlyTable>? orderBy,
+    _i1.OrderByBuilder<ItemTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<IdOnlyTable>? orderByList,
+    _i1.OrderByListBuilder<ItemTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findFirstRow<IdOnly>(
-      where: where?.call(IdOnly.t),
-      orderBy: orderBy?.call(IdOnly.t),
-      orderByList: orderByList?.call(IdOnly.t),
+    return session.dbNext.findFirstRow<Item>(
+      where: where?.call(Item.t),
+      orderBy: orderBy?.call(Item.t),
+      orderByList: orderByList?.call(Item.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  Future<IdOnly?> findById(
+  Future<Item?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.findById<IdOnly>(
+    return session.dbNext.findById<Item>(
       id,
       transaction: transaction,
     );
   }
 
-  Future<List<IdOnly>> insert(
+  Future<List<Item>> insert(
     _i1.Session session,
-    List<IdOnly> rows, {
+    List<Item> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insert<IdOnly>(
+    return session.dbNext.insert<Item>(
       rows,
       transaction: transaction,
     );
   }
 
-  Future<IdOnly> insertRow(
+  Future<Item> insertRow(
     _i1.Session session,
-    IdOnly row, {
+    Item row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.insertRow<IdOnly>(
+    return session.dbNext.insertRow<Item>(
       row,
       transaction: transaction,
     );
   }
 
-  Future<List<IdOnly>> update(
+  Future<List<Item>> update(
     _i1.Session session,
-    List<IdOnly> rows, {
-    _i1.ColumnSelections<IdOnlyTable>? columns,
+    List<Item> rows, {
+    _i1.ColumnSelections<ItemTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.update<IdOnly>(
+    return session.dbNext.update<Item>(
       rows,
-      columns: columns?.call(IdOnly.t),
+      columns: columns?.call(Item.t),
       transaction: transaction,
     );
   }
 
-  Future<IdOnly> updateRow(
+  Future<Item> updateRow(
     _i1.Session session,
-    IdOnly row, {
-    _i1.ColumnSelections<IdOnlyTable>? columns,
+    Item row, {
+    _i1.ColumnSelections<ItemTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.updateRow<IdOnly>(
+    return session.dbNext.updateRow<Item>(
       row,
-      columns: columns?.call(IdOnly.t),
+      columns: columns?.call(Item.t),
       transaction: transaction,
     );
   }
 
   Future<List<int>> delete(
     _i1.Session session,
-    List<IdOnly> rows, {
+    List<Item> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.delete<IdOnly>(
+    return session.dbNext.delete<Item>(
       rows,
       transaction: transaction,
     );
@@ -370,10 +417,10 @@ class IdOnlyRepository {
 
   Future<int> deleteRow(
     _i1.Session session,
-    IdOnly row, {
+    Item row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteRow<IdOnly>(
+    return session.dbNext.deleteRow<Item>(
       row,
       transaction: transaction,
     );
@@ -381,23 +428,23 @@ class IdOnlyRepository {
 
   Future<List<int>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<IdOnlyTable> where,
+    required _i1.WhereExpressionBuilder<ItemTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.deleteWhere<IdOnly>(
-      where: where(IdOnly.t),
+    return session.dbNext.deleteWhere<Item>(
+      where: where(Item.t),
       transaction: transaction,
     );
   }
 
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<IdOnlyTable>? where,
+    _i1.WhereExpressionBuilder<ItemTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.dbNext.count<IdOnly>(
-      where: where?.call(IdOnly.t),
+    return session.dbNext.count<Item>(
+      where: where?.call(Item.t),
       limit: limit,
       transaction: transaction,
     );

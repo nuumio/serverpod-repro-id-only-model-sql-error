@@ -1,0 +1,7 @@
+class: WareHouse
+table: warehouse
+fields:
+  # itemList is common in model containing items
+  itemList: ItemList?, relation
+  # Warehoure specific fields
+  address: String

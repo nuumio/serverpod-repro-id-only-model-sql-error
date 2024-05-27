@@ -1,0 +1,5 @@
+class: Item
+table: item
+fields:
+  name: String
+  # etc...

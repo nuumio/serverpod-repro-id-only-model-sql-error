@@ -3,8 +3,8 @@
     {
       "type": "createTable",
       "createTable": {
-        "name": "id_only",
-        "dartName": "IdOnly",
+        "name": "item",
+        "dartName": "Item",
         "module": "id_only_model_sql_error",
         "schema": "public",
         "columns": [
@@ -12,14 +12,265 @@
             "name": "id",
             "columnType": 2,
             "isNullable": false,
-            "columnDefault": "nextval('id_only_id_seq'::regclass)",
+            "columnDefault": "nextval('item_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "name",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          }
+        ],
+        "foreignKeys": [],
+        "indexes": [
+          {
+            "indexName": "item_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "item_list",
+        "dartName": "ItemList",
+        "module": "id_only_model_sql_error",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('item_list_id_seq'::regclass)",
             "dartType": "int?"
           }
         ],
         "foreignKeys": [],
         "indexes": [
           {
-            "indexName": "id_only_pkey",
+            "indexName": "item_list_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "item_list_entry",
+        "dartName": "ItemListEntry",
+        "module": "id_only_model_sql_error",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('item_list_entry_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "itemListId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "itemId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "amount",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "item_list_entry_fk_0",
+            "columns": [
+              "itemListId"
+            ],
+            "referenceTable": "item_list",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          },
+          {
+            "constraintName": "item_list_entry_fk_1",
+            "columns": [
+              "itemId"
+            ],
+            "referenceTable": "item",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "item_list_entry_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "shipping_crate",
+        "dartName": "ShippingCrate",
+        "module": "id_only_model_sql_error",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('shipping_crate_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "itemListId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "weight",
+            "columnType": 3,
+            "isNullable": false,
+            "dartType": "double"
+          },
+          {
+            "name": "source",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "destination",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "shipping_crate_fk_0",
+            "columns": [
+              "itemListId"
+            ],
+            "referenceTable": "item_list",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "shipping_crate_pkey",
+            "elements": [
+              {
+                "type": 0,
+                "definition": "id"
+              }
+            ],
+            "type": "btree",
+            "isUnique": true,
+            "isPrimary": true
+          }
+        ],
+        "managed": true
+      }
+    },
+    {
+      "type": "createTable",
+      "createTable": {
+        "name": "warehouse",
+        "dartName": "WareHouse",
+        "module": "id_only_model_sql_error",
+        "schema": "public",
+        "columns": [
+          {
+            "name": "id",
+            "columnType": 2,
+            "isNullable": false,
+            "columnDefault": "nextval('warehouse_id_seq'::regclass)",
+            "dartType": "int?"
+          },
+          {
+            "name": "itemListId",
+            "columnType": 2,
+            "isNullable": false,
+            "dartType": "int"
+          },
+          {
+            "name": "address",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "constraintName": "warehouse_fk_0",
+            "columns": [
+              "itemListId"
+            ],
+            "referenceTable": "item_list",
+            "referenceTableSchema": "public",
+            "referenceColumns": [
+              "id"
+            ],
+            "onUpdate": 3,
+            "onDelete": 3
+          }
+        ],
+        "indexes": [
+          {
+            "indexName": "warehouse_pkey",
             "elements": [
               {
                 "type": 0,

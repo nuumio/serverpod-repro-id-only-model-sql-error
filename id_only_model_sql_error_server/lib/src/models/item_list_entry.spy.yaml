@@ -1,0 +1,6 @@
+class: ItemListEntry
+table: item_list_entry
+fields:
+  itemListId: int, relation(name=item_list_entries, parent=item_list)
+  itemId: int, relation(parent=item)
+  amount: int

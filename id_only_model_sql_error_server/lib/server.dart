@@ -38,7 +38,31 @@ void run(List<String> args) async {
 
 Future<void> _bugRepro(Serverpod pod) async {
   final session = await pod.createSession();
+
+  // Create an item if one does not exist
+  final items = await Item.db.find(session);
+  if (items.isEmpty) {
+    items.add(await Item.db.insertRow(session, Item(name: 'Test')));
+  }
+  final item = items.first;
+
   // The following line causes the error
-  IdOnly.db.insertRow(session, IdOnly());
+  final shippingCrateList = await ItemList.db.insertRow(session, ItemList());
+  final shippingCrateEntries = await ItemListEntry.db.insert(session, [
+    ItemListEntry(
+      itemListId: shippingCrateList.id!,
+      itemId: item.id!,
+      amount: 5,
+    ),
+  ]);
+  final shippingCrate = ShippingCrate.db.insertRow(
+      session,
+      ShippingCrate(
+        itemListId: shippingCrateList.id!,
+        weight: 10,
+        source: 'Earth',
+        destination: 'Moon',
+      ));
+
   await session.close();
 }

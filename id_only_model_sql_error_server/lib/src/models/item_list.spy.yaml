@@ -1,0 +1,5 @@
+# Has only id column in DB
+class: ItemList
+table: item_list
+fields:
+  items: List<ItemListEntry>?, relation(name=item_list_entries)

@@ -10,17 +10,25 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class IdOnly extends _i1.SerializableEntity {
-  IdOnly._({this.id});
+abstract class Item extends _i1.SerializableEntity {
+  Item._({
+    this.id,
+    required this.name,
+  });
 
-  factory IdOnly({int? id}) = _IdOnlyImpl;
+  factory Item({
+    int? id,
+    required String name,
+  }) = _ItemImpl;
 
-  factory IdOnly.fromJson(
+  factory Item.fromJson(
     Map<String, dynamic> jsonSerialization,
     _i1.SerializationManager serializationManager,
   ) {
-    return IdOnly(
-        id: serializationManager.deserialize<int?>(jsonSerialization['id']));
+    return Item(
+      id: serializationManager.deserialize<int?>(jsonSerialization['id']),
+      name: serializationManager.deserialize<String>(jsonSerialization['name']),
+    );
   }
 
   /// The database id, set if the object has been inserted into the
@@ -28,20 +36,40 @@ abstract class IdOnly extends _i1.SerializableEntity {
   /// the id will be null.
   int? id;
 
-  IdOnly copyWith({int? id});
+  String name;
+
+  Item copyWith({
+    int? id,
+    String? name,
+  });
   @override
   Map<String, dynamic> toJson() {
-    return {if (id != null) 'id': id};
+    return {
+      if (id != null) 'id': id,
+      'name': name,
+    };
   }
 }
 
 class _Undefined {}
 
-class _IdOnlyImpl extends IdOnly {
-  _IdOnlyImpl({int? id}) : super._(id: id);
+class _ItemImpl extends Item {
+  _ItemImpl({
+    int? id,
+    required String name,
+  }) : super._(
+          id: id,
+          name: name,
+        );
 
   @override
-  IdOnly copyWith({Object? id = _Undefined}) {
-    return IdOnly(id: id is int? ? id : this.id);
+  Item copyWith({
+    Object? id = _Undefined,
+    String? name,
+  }) {
+    return Item(
+      id: id is int? ? id : this.id,
+      name: name ?? this.name,
+    );
   }
 }

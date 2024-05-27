@@ -1,0 +1,9 @@
+class: ShippingCrate
+table: shipping_crate
+fields:
+  # itemList is common in model containing items
+  itemList: ItemList?, relation
+  # Crate specific fields
+  weight: double
+  source: String
+  destination: String

@@ -3,8 +3,46 @@ BEGIN;
 --
 -- ACTION CREATE TABLE
 --
-CREATE TABLE "id_only" (
+CREATE TABLE "item" (
+    "id" serial PRIMARY KEY,
+    "name" text NOT NULL
+);
+
+--
+-- ACTION CREATE TABLE
+--
+CREATE TABLE "item_list" (
     "id" serial PRIMARY KEY
+);
+
+--
+-- ACTION CREATE TABLE
+--
+CREATE TABLE "item_list_entry" (
+    "id" serial PRIMARY KEY,
+    "itemListId" integer NOT NULL,
+    "itemId" integer NOT NULL,
+    "amount" integer NOT NULL
+);
+
+--
+-- ACTION CREATE TABLE
+--
+CREATE TABLE "shipping_crate" (
+    "id" serial PRIMARY KEY,
+    "itemListId" integer NOT NULL,
+    "weight" double precision NOT NULL,
+    "source" text NOT NULL,
+    "destination" text NOT NULL
+);
+
+--
+-- ACTION CREATE TABLE
+--
+CREATE TABLE "warehouse" (
+    "id" serial PRIMARY KEY,
+    "itemListId" integer NOT NULL,
+    "address" text NOT NULL
 );
 
 --
@@ -230,6 +268,42 @@ CREATE INDEX "serverpod_session_log_isopen_idx" ON "serverpod_session_log" USING
 --
 -- ACTION CREATE FOREIGN KEY
 --
+ALTER TABLE ONLY "item_list_entry"
+    ADD CONSTRAINT "item_list_entry_fk_0"
+    FOREIGN KEY("itemListId")
+    REFERENCES "item_list"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "item_list_entry"
+    ADD CONSTRAINT "item_list_entry_fk_1"
+    FOREIGN KEY("itemId")
+    REFERENCES "item"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
+ALTER TABLE ONLY "shipping_crate"
+    ADD CONSTRAINT "shipping_crate_fk_0"
+    FOREIGN KEY("itemListId")
+    REFERENCES "item_list"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
+ALTER TABLE ONLY "warehouse"
+    ADD CONSTRAINT "warehouse_fk_0"
+    FOREIGN KEY("itemListId")
+    REFERENCES "item_list"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
 ALTER TABLE ONLY "serverpod_log"
     ADD CONSTRAINT "serverpod_log_fk_0"
     FOREIGN KEY("sessionLogId")
@@ -262,9 +336,9 @@ ALTER TABLE ONLY "serverpod_query_log"
 -- MIGRATION VERSION FOR id_only_model_sql_error
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('id_only_model_sql_error', '20240523154649638', now())
+    VALUES ('id_only_model_sql_error', '20240527163511276', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20240523154649638', "timestamp" = now();
+    DO UPDATE SET "version" = '20240527163511276', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod
